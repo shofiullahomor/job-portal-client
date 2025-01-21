@@ -64,6 +64,9 @@ const Signin = () => {
               <button className="btn btn-primary">Ligin</button>
             </div>
           </form>
+          <div className="text-center my-4">
+            <SocialLogin></SocialLogin>
+          </div>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import lottieRegister from "../../assets/register.json";
 import AuthContext from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import { useContext } from "react";
+import SocialLogin from "../shared/SocialLogin";
 const Register = () => {
   const { createUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
@@ -72,6 +73,10 @@ const Register = () => {
               <button className="btn btn-primary">Register</button>
             </div>
           </form>
+          <div className="divider">OR</div>
+          <div className="text-center my-4">
+            <SocialLogin></SocialLogin>
+          </div>
         </div>
       </div>
     </div>

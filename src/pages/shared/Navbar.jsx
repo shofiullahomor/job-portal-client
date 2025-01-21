@@ -4,6 +4,8 @@ import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import logo from "../../assets/favicon.png";
 import { NavLink } from "react-router-dom";
+import { motion } from "motion/react";
+// import * as motion from "motion/react-client";
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
   const handleSignOut = () => {
@@ -57,7 +59,17 @@ const Navbar = () => {
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
-            <img src={logo} alt="" />
+            <motion.img
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 5,
+                delay: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+              src={logo}
+              alt=""
+            />
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
