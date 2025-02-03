@@ -2,6 +2,7 @@ import React from "react";
 import AuthContext from "./AuthContext";
 import { useState, useEffect } from "react";
 import auth from "../firebase/firebase.init";
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -35,7 +36,26 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("state captured", currentUser);
+      console.log("state captured", currentUser?.email);
+
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+        axios
+          .post("https://job-portal-server-orpin.vercel.app/jwt", user, {
+            withCredentials: true,
+          })
+          .then((res) => console.log("login token", res.data));
+      } else {
+        axios
+          .post(
+            "https://job-portal-server-orpin.vercel.app/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => console.log("logout", res.data));
+      }
       setLoading(false);
     });
     return () => {

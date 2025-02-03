@@ -3,9 +3,15 @@ import Lottie from "lottie-react";
 import lottieLogin from "../../assets/login.json";
 import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
+import SocialLogin from "../shared/SocialLogin";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signin = () => {
   const { signinUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || "/";
   const handleSignin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,9 +19,19 @@ const Signin = () => {
     const password = form.password.value;
     console.log(email, password);
 
-    signinUser(email, pasasword)
+    signinUser(email, password)
       .then((result) => {
-        console.log("signin user", result);
+        console.log("signin user", result.user.email);
+        const user = { email: email };
+        axios
+          .post("https://job-portal-server-orpin.vercel.app/jwt", user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
+
+        // navigate(from);
       })
       .catch((error) => {
         console.log(error.message);
@@ -61,7 +77,7 @@ const Signin = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Ligin</button>
+              <button className="btn btn-primary">Login</button>
             </div>
           </form>
           <div className="text-center my-4">
